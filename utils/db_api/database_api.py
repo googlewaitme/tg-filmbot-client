@@ -20,3 +20,23 @@ class DBApi():
             'format': 'json'
         }
         return requests.get(url, params).json()[0]['text']
+
+    def get_dictributions(self):
+        url = self.base_url + 'dictribution/'
+        params = {
+            'format': 'json'
+        }
+        return requests.get(url, params).json()
+
+    def send_activity(self, activity_type, element_unique_id):
+        params = {
+            'activity_type': activity_type,
+            'element_unique_id': element_unique_id,
+            'format': 'json'
+        }
+        url = self.base_url + 'activity/'
+        return requests.post(url, params)
+
+    def get_users(self):
+        # TODO return list from local machine
+        yield '709379303'
