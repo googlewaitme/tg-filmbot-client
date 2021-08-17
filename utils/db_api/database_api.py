@@ -1,4 +1,5 @@
 import requests
+from utils.db.models import User
 
 
 class DBApi():
@@ -43,6 +44,13 @@ class DBApi():
         url = self.base_url + 'activity/'
         return requests.post(url, params)
 
+    def get_or_create(self, telegram_id):
+        user, created = User.get_or_create(telegram_id=telegram_id)
+        return user, created
+
+    def add_user(self, telegram_id):
+        User.create(telegram_id=telegram_id)
+
     def get_users(self):
-        # TODO return list from local machine
-        yield '709379303'
+        for user in User.select():
+            yield user.telegram_id
