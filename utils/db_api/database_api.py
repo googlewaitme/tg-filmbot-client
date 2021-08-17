@@ -24,9 +24,15 @@ class DBApi():
     def get_dictributions(self):
         url = self.base_url + 'dictribution/'
         params = {
-            'format': 'json'
+            'format': 'json',
+            'to_send': True
         }
         return requests.get(url, params).json()
+
+    def set_dictribution_is_sended(self, params):
+        url = params['url']
+        params['is_send'] = True
+        requests.patch(url, params)
 
     def send_activity(self, activity_type, element_unique_id):
         params = {

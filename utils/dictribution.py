@@ -6,16 +6,15 @@ import time
 
 async def check_new_dictribution():
     dictribtuions = db_api.get_dictributions()
-    print(dictribtuions)
     for dictribtuion in dictribtuions:
         await send_dictribution(dictribtuion)
+        db_api.set_dictribution_is_sended(dictribtuion)
         await asyncio.sleep(100)
 
 
 async def send_dictribution(dictribtuion):
     message = make_message(dictribtuion)
     for user in db_api.get_users():
-        print(user)
         try:
             await dp.bot.send_message(chat_id=user, **message)
             time.sleep(0.5)
